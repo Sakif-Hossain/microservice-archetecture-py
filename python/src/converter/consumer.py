@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import gridfs
 from convert import to_mp3
 
-if main():
+def main():
     # Connect to MongoDB
     client = MongoClient("host.minikube.internal", 27017) # Access to host system in local env not in cluster
     # Create a database called videos and mp3s
