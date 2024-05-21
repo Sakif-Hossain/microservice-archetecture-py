@@ -21,6 +21,7 @@ def upload(file, fs, access, channel):
         # Save the file in MongoDB
         file_id = fs.put(file)
     except Exception as e:
+        print(e)
         return "internal server error", 500
     
     # Send a message to RabbitMQ to process the file
@@ -38,5 +39,6 @@ def upload(file, fs, access, channel):
             properties=pika.BasicProperties(delivery_mode=pika.spec.PERSISTENT_DELIVERY_MODE)
             )
     except Exception as e:
+        print(e)
         fs.delete(file_id)
         return "internal server error", 500

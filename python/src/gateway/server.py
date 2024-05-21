@@ -31,6 +31,9 @@ def login():
 def upload():
     access, err = validate.token(request) # Access token is the JSON object of the payload of the JWT token
 
+    if err:
+        return err
+    
     access = json.loads(access) # Convert the JSON object to a Python dictionary
 
     if access["admin"]:

@@ -1,10 +1,12 @@
 import os, requests
 
-def validate(request):
+def token(request):
     if not "Authorization" in request.headers:
         return None, ("No credentials provided", 401)
     
     token = request.headers["Authorization"] # Get the JWT token from the request headers
+
+    print("token = ", token)
 
     if not token:
         return None, ("No credentials provided", 401)

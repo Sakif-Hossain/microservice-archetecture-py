@@ -15,6 +15,7 @@ server.config["MYSQL_PORT"] = int(os.getenv("MYSQL_PORT"))
 @server.route("/login", methods=["POST"])
 def login():
     auth = request.authorization
+    # print("auth = ", auth.username, ":", auth.password)
     if not auth or not auth.username or not auth.password:
         return "Missing username or password", 401
     
@@ -29,7 +30,9 @@ def login():
         email = data[0]
         password = data[1]
 
-        if auth.email != email or auth.password != password:
+        # print("auth.email = ", auth.username, "auth.password = ", auth.password)
+
+        if auth.username != email or auth.password != password:
             return "Invalid credentials", 401
         else:
             return createJWT(auth.username, os.environ.get("JWT_SECRET_KEY"), True)
@@ -40,14 +43,16 @@ def createJWT(username, secret, is_admin):
     payload = {
         "username": username,
         "is_admin": is_admin,
-        "iat": datetime.datetime.utcnow(),
-        "exp": datetime.datetime.utcnow() + datetime.timedelta(days=1)
+        "iat": datetime.datetime.now(),
+        "exp": datetime.datetime.now() + datetime.timedelta(days=1)
     }
-    return jwt.encode(payload, secret, algorithm="HS256")
+    return jwt.encode(payload, str(secret), algorithm="HS256")
 
 @server.route("/validate", methods=["POST"])
 def validate():
-    token = request.headers.get("Authorization")
+    token = request.headers["Authorization"]
+
+    print("token = ", token)
 
     if not token:
         return "Token is missing", 401
@@ -55,7 +60,7 @@ def validate():
     encoded_token = token.split(" ")[1]
 
     try:
-        decoded = jwt.decode(encoded_token, os.environ.get("JWT_SECRET_KEY"), algorithm=["HS256"])
+        decoded = jwt.decode(encoded_token, os.environ.get("JWT_SECRET"), algorithm=["HS256"])
     except jwt.ExpiredSignatureError:
         return "Token has expired", 403
     except jwt.InvalidTokenError:
