@@ -22,7 +22,7 @@ def upload(file, fs, access, channel):
         file_id = fs.put(file)
     except Exception as e:
         print(e)
-        return "internal server error", 500
+        return f"Error saving file to MongoDB: {e}", 500
     
     # Send a message to RabbitMQ to process the file
     message = {
@@ -41,4 +41,4 @@ def upload(file, fs, access, channel):
     except Exception as e:
         print(e)
         fs.delete(file_id)
-        return "internal server error", 500
+        return f"Error publishing message to RabbitMQ: {e}", 500

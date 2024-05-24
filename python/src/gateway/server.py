@@ -36,7 +36,7 @@ def upload():
     
     access = json.loads(access) # Convert the JSON object to a Python dictionary
 
-    if access["admin"]:
+    if access["is_admin"]:
         # If the user is an admin, then they can upload the video
         if len(request.files) > 1 or len(request.files) < 1:
             return "Please provide exactly one video file", 400

@@ -1,6 +1,6 @@
 import pika, os, json, tempfile
 from bson.objectid import ObjectId
-import moviepy.editor as mp
+import moviepy.editor 
 
 def start(message, fs_videos, fs_mp3s, channel):
     message = json.loads(message) # Convert the JSON object to a Python dictionary
@@ -12,7 +12,9 @@ def start(message, fs_videos, fs_mp3s, channel):
     # write the video file to the temporary file
     temp_file.write(out_file.read())
     # create audio file from the video file
-    audio = mp.editor.VideoFileClip(temp_file.name).audio
+    audio = moviepy.editor.VideoFileClip(temp_file.name).audio
+    if audio is None:
+        return "failed to extract audio from video"
     # close temporary file
     temp_file.close() # automatically deletes the temporary file aswell
 
