@@ -10,6 +10,7 @@ To ensure scalability and efficient management of a large user base, I container
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
+- [Future Works](#future-works)
 - [License](#license)
 - [Contact](#contact)
 - [Acknowledgements](#acknowledgements)
@@ -87,6 +88,10 @@ curl --output something.mp3 -X GET -H 'Authorization: Bearer ' "http://mp3conver
 - Scalability and Reliability:
   - Designed to handle a large user base and high traffic.
   - Utilizes MongoDb Gridfs to allow large media files to be uploaded in chunks.
+
+## Future Works
+- I have used google smtp service to send emails to the user, but google seems to block the account, maybe assuming it to be suspisious. Implement another way to sent notification to the user.
+- Implement a front-end to make it easier for the users to use the application.
 
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details.
