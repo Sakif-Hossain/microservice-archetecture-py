@@ -4,6 +4,7 @@ from email.message import EmailMessage
 def notification(body):
     # Send an email notification
     try:
+        '''Since google has stoped unsafe app to use the google account I am only sending the token back'''
         msg = json.loads(body) # Convert the JSON object to a Python dictionary
         mp3_file_id = msg["mp3_file_id"]
         sender_address = os.environ.get("GMAIL_ADDRESS")
